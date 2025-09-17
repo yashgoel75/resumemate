@@ -8,6 +8,7 @@ import phone from "@/assets/phone-call.svg";
 import position from "@/assets/position.svg";
 import description from "@/assets/Description.svg";
 import download from "@/assets/Download.svg";
+import back from "@/assets/chevron-left.svg";
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ export default function Home() {
     position: "",
     description: "",
   });
+
+  const [viewPDF, setViewPDF] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,128 +31,189 @@ export default function Home() {
     }));
   };
 
+  function downloadPDF() {}
+
   return (
     <>
       <div className="min-h-screen flex justify-center items-center border border-1">
-        <div className="border-1 border-gray-300 p-5 rounded-lg bg-gray-50 w-[95%] lg:w-[50%]">
-          <h1 className="text-2xl font-semibold mb-5 text-center">
-            Add Your Details
-          </h1>
-          <div className="space-y-4">
-            <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
-              <div className="px-5">
-                <Image src={user} width={25} alt="User" />
+        {viewPDF ? (
+          <>
+            <div className="border-1 border-gray-300 p-5 rounded-lg bg-gray-100 w-[95%] lg:w-[60%]">
+              <div className="mx-10 cursor-pointer">
+                <Image
+                  onClick={() => setViewPDF(false)}
+                  src={back}
+                  width={30}
+                  alt="Back"
+                ></Image>
               </div>
-              <div className="flex-1">
-                <label htmlFor="name" className="font-semibold">
-                  Name
-                </label>
-                <br />
-                <input
-                  name="name"
-                  type="text"
-                  placeholder="e.g. John Doe"
-                  className="focus:outline-none w-[95%]"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
+              <div className="w-[95%] lg:w-[50%] flex-1 space-y-5 border-black border-1 m-auto mt-2 bg-white p-5 shadow-md">
+                <div className="flex gap-2">
+                  <p className="font-bold">Name:</p>
+                  <p className="text-gray-600">{formData.name}</p>
+                </div>
+                <div className="flex gap-2">
+                  <p className="font-bold">Email:</p>
+                  <p className="text-gray-600">{formData.email}</p>
+                </div>
+                <div className="flex gap-2">
+                  <p className="font-bold">Phone:</p>
+                  <p className="text-gray-600">{formData.phone}</p>
+                </div>
+                <div className="flex gap-2">
+                  <p className="font-bold">Position:</p>
+                  <p className="text-gray-600">{formData.position}</p>
+                </div>
+                <div className="flex gap-2">
+                  <p className="font-bold">Description:</p>
+                  <p className="text-gray-600">{formData.description}</p>
+                </div>
+              </div>
+              <div className="w-[95%] lg:w-[50%] flex-1 space-y-5 m-auto mt-2 shadow-md">
+                <button
+                  onClick={downloadPDF}
+                  className="py-1 px-3 bg-green-700 text-white font-bold text-lg w-full rounded-md cursor-pointer flex justify-center items-center"
+                >
+                  <Image
+                    className="mr-5"
+                    src={download}
+                    width={30}
+                    alt="Download PDF"
+                  ></Image>
+                  Download PDF
+                </button>
               </div>
             </div>
+          </>
+        ) : (
+          <>
+            <div className="border-1 border-gray-300 p-5 rounded-lg bg-gray-50 w-[95%] lg:w-[50%]">
+              <h1 className="text-2xl font-semibold mb-5 text-center">
+                Add Your Details
+              </h1>
+              <div className="space-y-4">
+                <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
+                  <div className="px-5">
+                    <Image src={user} width={25} alt="User" />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="name" className="font-semibold">
+                      Name
+                    </label>
+                    <br />
+                    <input
+                      name="name"
+                      type="text"
+                      placeholder="e.g. John Doe"
+                      className="focus:outline-none w-[95%]"
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
 
-            <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
-              <div className="px-5">
-                <Image src={mail} width={25} alt="Mail" />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="email" className="font-semibold">
-                  Email
-                </label>
-                <br />
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="e.g. Johndoe@gmail.com"
-                  className="focus:outline-none w-[95%]"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+                <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
+                  <div className="px-5">
+                    <Image src={mail} width={25} alt="Mail" />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="email" className="font-semibold">
+                      Email
+                    </label>
+                    <br />
+                    <input
+                      name="email"
+                      type="email"
+                      placeholder="e.g. Johndoe@gmail.com"
+                      className="focus:outline-none w-[95%]"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
 
-            <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
-              <div className="px-5">
-                <Image src={phone} width={25} alt="Phone" />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="phone" className="font-semibold">
-                  Phone Number
-                </label>
-                <br />
-                <input
-                  name="phone"
-                  type="text"
-                  placeholder="e.g. (220) 222-20002"
-                  className="focus:outline-none w-[95%]"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+                <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
+                  <div className="px-5">
+                    <Image src={phone} width={25} alt="Phone" />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="phone" className="font-semibold">
+                      Phone Number
+                    </label>
+                    <br />
+                    <input
+                      name="phone"
+                      type="text"
+                      placeholder="e.g. (220) 222-20002"
+                      className="focus:outline-none w-[95%]"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
 
-            <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
-              <div className="px-5">
-                <Image src={position} width={25} alt="Position" />
-              </div>
-              <div className="flex-1">
-                <label htmlFor="position" className="font-semibold">
-                  Position
-                </label>
-                <br />
-                <input
-                  name="position"
-                  type="text"
-                  placeholder="e.g. Junior Front end Developer"
-                  className="focus:outline-none w-[95%]"
-                  value={formData.position}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+                <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
+                  <div className="px-5">
+                    <Image src={position} width={25} alt="Position" />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="position" className="font-semibold">
+                      Position
+                    </label>
+                    <br />
+                    <input
+                      name="position"
+                      type="text"
+                      placeholder="e.g. Junior Front end Developer"
+                      className="focus:outline-none w-[95%]"
+                      value={formData.position}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
 
-            <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
-              <div className="px-5">
-                <Image src={description} width={25} alt="Description" />
+                <div className="rounded-xl bg-white shadow-md py-1 flex items-center">
+                  <div className="px-5">
+                    <Image src={description} width={25} alt="Description" />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="description" className="font-semibold">
+                      Description
+                    </label>
+                    <br />
+                    <textarea
+                      name="description"
+                      placeholder="e.g. Work experiences"
+                      className="focus:outline-none w-[95%]"
+                      value={formData.description}
+                      onChange={handleChange}
+                    ></textarea>
+                  </div>
+                </div>
               </div>
-              <div className="flex-1">
-                <label htmlFor="description" className="font-semibold">
-                  Description
-                </label>
-                <br />
-                <textarea
-                  name="description"
-                  placeholder="e.g. Work experiences"
-                  className="focus:outline-none w-[95%]"
-                  value={formData.description}
-                  onChange={handleChange}
-                ></textarea>
+              <div className="flex mt-5 gap-4">
+                <button
+                  onClick={() => setViewPDF(true)}
+                  className="py-1 px-3 bg-green-700 text-white font-bold text-lg w-full rounded-md cursor-pointer"
+                >
+                  View PDF
+                </button>
+                <button
+                  onClick={downloadPDF}
+                  className="py-1 px-3 bg-green-700 text-white font-bold text-lg w-full rounded-md cursor-pointer flex justify-center items-center"
+                >
+                  <Image
+                    className="mr-5"
+                    src={download}
+                    width={30}
+                    alt="Download PDF"
+                  ></Image>
+                  Download PDF
+                </button>
               </div>
             </div>
-          </div>
-          <div className="flex mt-5 gap-4">
-            <button className="py-1 px-3 bg-green-700 text-white font-bold text-lg w-full rounded-md cursor-pointer">
-              View PDF
-            </button>
-            <button className="py-1 px-3 bg-green-700 text-white font-bold text-lg w-full rounded-md cursor-pointer flex justify-center items-center">
-              <Image
-                className="mr-5"
-                src={download}
-                width={30}
-                alt="Download PDF"
-              ></Image>
-              Download PDF
-            </button>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </>
   );
