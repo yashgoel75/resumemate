@@ -48,7 +48,7 @@ export default function Home() {
       alert("Phone cannot be empty!");
       return;
     }
-    if (formData.email != "" && emailRegex.test(formData.email)) {
+    if (formData.email != "" && !emailRegex.test(formData.email)) {
       alert("Email is Invalid");
       return;
     }
@@ -72,12 +72,20 @@ export default function Home() {
       alert("Phone cannot be empty!");
       return;
     }
+
     const doc = new jsPDF();
+
     doc.text(`Name: ${formData.name}`, 10, 10);
     doc.text(`Email: ${formData.email}`, 10, 20);
     doc.text(`Phone: ${formData.phone}`, 10, 30);
     doc.text(`Position: ${formData.position}`, 10, 40);
-    doc.text(`Description: ${formData.description}`, 10, 50);
+
+    const descriptionText = doc.splitTextToSize(
+      `Description: ${formData.description}`,
+      180
+    );
+    doc.text(descriptionText, 10, 50);
+
     doc.save("resumemate.pdf");
   };
 
@@ -123,9 +131,11 @@ export default function Home() {
                 </div>
 
                 {/* user's description */}
-                <div className="flex gap-2">
+                <div className="flex-1 gap-2">
                   <p className="font-bold">Description:</p>
-                  <p className="text-gray-600">{formData.description}</p>
+                  <p className="text-gray-600 wrap-break-word max-w-full">
+                    {formData.description}
+                  </p>
                 </div>
               </div>
 
