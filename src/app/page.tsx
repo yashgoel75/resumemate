@@ -1,5 +1,7 @@
 "use client";
 
+import jsPDF from "jspdf";
+
 import Image from "next/image";
 import { useState } from "react";
 import user from "@/assets/user.svg";
@@ -31,7 +33,15 @@ export default function Home() {
     }));
   };
 
-  function downloadPDF() {}
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    doc.text(`Name: ${formData.name}`, 10, 10);
+    doc.text(`Email: ${formData.email}`, 10, 20);
+    doc.text(`Phone: ${formData.phone}`, 10, 30);
+    doc.text(`Position: ${formData.position}`, 10, 40);
+    doc.text(`Description: ${formData.description}`, 10, 50);
+    doc.save("resumemate.pdf");
+  };
 
   return (
     <>
