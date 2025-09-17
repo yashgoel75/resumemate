@@ -33,7 +33,45 @@ export default function Home() {
     }));
   };
 
+  const viewPDFButton = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (formData.name == "") {
+      alert("Name cannot be empty!");
+      return;
+    }
+    if (formData.email == "") {
+      alert("Email cannot be empty!");
+      return;
+    }
+    if (formData.phone == "") {
+      alert("Phone cannot be empty!");
+      return;
+    }
+    if (formData.email != "" && emailRegex.test(formData.email)) {
+      alert("Email is Invalid");
+      return;
+    }
+    if (formData.phone != "" && formData.phone.length < 10) {
+      alert("Phone Number cannot be less than 10 digits");
+      return;
+    }
+    setViewPDF(true);
+  };
+
   const downloadPDF = () => {
+    if (formData.name == "") {
+      alert("Name cannot be empty!");
+      return;
+    }
+    if (formData.email == "") {
+      alert("Email cannot be empty!");
+      return;
+    }
+    if (formData.phone == "") {
+      alert("Phone cannot be empty!");
+      return;
+    }
     const doc = new jsPDF();
     doc.text(`Name: ${formData.name}`, 10, 10);
     doc.text(`Email: ${formData.email}`, 10, 20);
@@ -203,7 +241,7 @@ export default function Home() {
               </div>
               <div className="flex mt-5 gap-4">
                 <button
-                  onClick={() => setViewPDF(true)}
+                  onClick={viewPDFButton}
                   className="py-1 px-3 bg-green-700 text-white font-bold text-lg w-full rounded-md cursor-pointer"
                 >
                   View PDF
