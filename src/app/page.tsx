@@ -60,6 +60,8 @@ export default function Home() {
   };
 
   const downloadPDF = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     if (formData.name == "") {
       alert("Name cannot be empty!");
       return;
@@ -70,6 +72,14 @@ export default function Home() {
     }
     if (formData.phone == "") {
       alert("Phone cannot be empty!");
+      return;
+    }
+    if (formData.email != "" && !emailRegex.test(formData.email)) {
+      alert("Email is Invalid");
+      return;
+    }
+    if (formData.phone != "" && formData.phone.length < 10) {
+      alert("Phone Number cannot be less than 10 digits");
       return;
     }
 
